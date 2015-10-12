@@ -1,0 +1,58 @@
+<html>
+<head>
+<script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/redmine.js"></script>
+<script type="text/javascript">
+client = new RedmineClient("http://192.168.56.101/redmine311");
+
+function showLoginDialog() {
+  $('#dialog_overlay').show();
+  $('#login_dialog').show();
+}
+
+function hideDialog() {
+  $('#dialog_overlay').hide();
+  $('.dialog').hide();
+}
+</script>
+<link rel="stylesheet" type="text/css" href="css/redmine.css"></link>
+</head>
+
+<body>
+
+<div id="content">
+  <div id="north">
+    <div id="account">
+      <div id="login">
+        <a href="#" onclick="showLoginDialog();">Login</a>
+      </div>
+      <div id="logout">
+        <a href="#" onclick="$('#login').show(); $('logout').hide();">Logout</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="west"></div>
+
+
+  <div id="east"></div>
+
+  <div id="center"></div>
+
+  <div id="south"></div>
+</div>
+
+<div id="dialog">
+  <div id="login_dialog" class="dialog">
+    <form>
+      Login ID<input type="text" id="login_id" name="login_id" size="20"><br>
+      Password<input type="password" id="login_password" name="login_password" size="20"><br>
+      <input type="button" value="Login" onclick="client.login($('#login_id').val(), $('#login_password').val()); hideDialog();">
+      <input type="button" value="Cancel" onclick="hideDialog();">
+    </form>
+  </div>
+</div>
+<div id="dialog_overlay" class="dialog_overlay"></div>
+
+</body>
+</html>

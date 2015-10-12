@@ -1,0 +1,65 @@
+div#north {
+  width: 100%;
+  height: 1em;
+  border: 1px solid black;
+}
+
+div#west {
+  float: left;
+  width: 15%;
+  min-height: 600px;
+  border: 1px solid black;
+}
+
+div#center {
+  min-height: 600px;
+  border: 1px solid black;
+}
+
+div#east {
+  float: right;
+  width: 15%;
+  min-height: 600px;
+  border: 1px solid black;
+}
+
+div#south {
+  clar: both;
+  width: 100%;
+  height: 1em;
+  border: 1px solid black;
+}
+
+div#account {
+  float: right;
+}
+
+div#login {
+}
+
+div#logout {
+  display: none;
+}
+
+div.dialog {
+  display: none;
+  position: absolute;
+  z-index: 101;
+  background-color: white;
+  left: 50px;
+  top: 50px;
+  padding: 4px;
+  border: 1px solid black;
+}
+
+div.dialog_overlay {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0.5;
+  background-color: black;
+  z-index: 100;
+}
