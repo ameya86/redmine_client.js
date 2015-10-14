@@ -63,3 +63,7 @@ div.dialog_overlay {
   background-color: black;
   z-index: 100;
 }
+
+.attr {
+  display: none;
+}
