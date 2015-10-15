@@ -42,31 +42,31 @@ RedmineClient.prototype = {
     },
 
     setProjects: function(projects) {
-        $.each(projects["projects"], function(index, value) {
+        $.each(projects["projects"], function(index, project) {
             var tag = $('<div>');
             var link = $('<a>');
 
-            link.text(value["name"]);
+            link.text(project["name"]);
             link.attr('href', '#');
 
             var identifier = $('<div>');
-            identifier.text(value["identifier"]);
+            identifier.text(project["identifier"]);
             identifier.addClass('attr');
             identifier.addClass('identifier');
 
-            var number = $('<div>');
-            number.text(value["id"]);
-            number.addClass('attr');
-            number.addClass('project_id');
+            var project_id = $('<div>');
+            project_id.text(project["id"]);
+            project_id.addClass('attr');
+            project_id.addClass('project_id');
 
             tag.addClass('project');
             tag.append(link);
-            tag.append(number);
+            tag.append(project_id);
             tag.append(identifier);
             $('#project_list').append(tag);
         });
 
-        $('#project_list div.project').click(function(that) {
+        $('#project_list div.project').click(function() {
             // todo clientでなくthis的な呼び方をしたい
             client.getIssues($(this).find('.project_id:first').text());
         });
@@ -86,11 +86,51 @@ RedmineClient.prototype = {
     },
 
     setIssues: function(issues) {
-      $.each(issues["issues"], function(index, issue) {
-          var tag = $('<div>');
-          tag.text(issue['subject']);
-          $('#issue_list').append(tag);
-      });
+        $.each(issues["issues"], function(index, issue) {
+            var link = $('<a>');
+
+            link.text(issue["subject"]);
+            link.attr('href', '#');
+
+            var issue_id = $('<div>');
+            issue_id.text(issue["id"]);
+            issue_id.addClass('attr');
+            issue_id.addClass('issue_id');
+
+            var tag = $('<div>');
+            tag.addClass('issue');
+            tag.append(issue_id);
+            tag.append(link);
+            $('#issue_list').append(tag);
+        });
+
+        $('#issue_list div.issue').click(function() {
+            // todo clientでなくthis的な呼び方をしたい
+            client.getIssue($(this).find('.issue_id:first').text());
+        });
+    },
+
+    getIssue: function(issue_id) {
+          $.ajax({
+            url: this.base_url + "/issues/" + issue_id + ".json",
+            dataType: 'json',
+            headers: {
+                "X-Redmine-API-Key": this.api_key
+            },
+            success: this.setIssue,
+            error: this.errorPattern
+        });
+    },
+
+    setIssue: function(issue_data) {
+        var issue = issue_data["issue"];
+        var description = $('<div>');
+        description.text(issue["description"]);
+
+        var tag = $('<div>');
+        tag.text(issue['subject']);
+        tag.append(description);
+        $('#show_issue').append(tag);
     },
 
     errorPattern: function(jqXHR, textStatus, errorThrown) {
